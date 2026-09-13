@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="ScrjQF1pJ2VKnG8LKjvpYf">
+<head data-page-node-id="5OMAfGWghNIWzrvrG0qzJ1">
+<meta charset="utf-8" data-page-node-id="DVUvGBtlVYJtTUKAC4CCYV">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="PvYtwCbjE0hOxAKywII6ib">
+<title>BOSS 直聘岗位清洗筛选工具</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    background: #f5f6f8; color: #1f2329; font-size: 14px;
+  }
+  header {
+    background: #2b6cff; color: #fff; padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  header h1 { font-size: 18px; margin: 0; font-weight: 600; }
+  header .tag {
+    background: rgba(255,255,255,.2); padding: 2px 8px; border-radius: 10px;
+    font-size: 12px;
+  }
+  .banner {
+    background: #fff7e6; border-bottom: 1px solid #ffe0a3; color: #8a5a00;
+    padding: 8px 20px; font-size: 12.5px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 16px 20px 40px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  button {
+    border: none; border-radius: 6px; padding: 8px 14px; cursor: pointer;
+    font-size: 13px; background: #2b6cff; color: #fff; transition: .15s;
+  }
+  button:hover { background: #1d57e0; }
+  button.ghost { background: #fff; color: #2b6cff; border: 1px solid #c5d3f5; }
+  button.ghost:hover { background: #eef3ff; }
+  button:disabled { background: #b9c2d0; cursor: not-allowed; }
+  .stats { font-size: 12.5px; color: #5b6b85; margin: 0 0 12px; }
+  .stats b { color: #2b6cff; }
+  .panel {
+    background: #fff; border: 1px solid #e6e9ef; border-radius: 10px;
+    padding: 14px 16px; margin-bottom: 16px;
+  }
+  .panel h3 { margin: 0 0 12px; font-size: 14px; color: #2a3346; }
+  .filters { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 12px; color: #6b7585; }
+  select, input[type=text], input[type=number] {
+    padding: 7px 9px; border: 1px solid #d4dae6; border-radius: 6px; font-size: 13px;
+    min-width: 150px; background: #fff;
+  }
+  .checks { display: flex; flex-wrap: wrap; gap: 6px 12px; }
+  .checks label { font-size: 12.5px; color: #3a4456; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 13px; }
+  th, td { border: 1px solid #e6e9ef; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f0f3f9; color: #2a3346; font-weight: 600; position: sticky; top: 0; }
+  tbody tr:nth-child(even) { background: #fafbfd; }
+  .sal-ok { color: #1a7f37; font-weight: 600; }
+  .sal-no { color: #b42318; }
+  .pill { display: inline-block; background: #eef3ff; color: #2b6cff; border-radius: 4px;
+    padding: 1px 6px; margin: 1px 2px; font-size: 11.5px; }
+  .row-dup { opacity: .55; }
+  .row-miss { background: #fff5f5 !important; }
+  .link a { color: #2b6cff; word-break: break-all; }
+  .empty { text-align: center; color: #9aa4b5; padding: 30px; }
+  #msg { font-size: 12.5px; color: #b42318; min-height: 18px; margin: 4px 0; }
+  .spacer { flex: 1; }
+</style>
+</head>
+<body data-page-node-id="rCPoxsBb3dMLcYN3Mbo3YP">
+<header data-page-node-id="KGYt9HBxGwNyFBaHnmKBAF">
+  <h1 data-page-node-id="l2E3kxFALXBNLmAvuTl5AB">BOSS 直聘岗位清洗筛选工具</h1>
+  <span class="tag" data-page-node-id="GXC2fAx4POv5lX4m4vhrDF">本地运行</span>
+  <span class="tag" data-page-node-id="wrvnbrbKfSiCVoUnUBIXE0">合规·仅处理公开数据</span>
+</header>
+<div class="banner" data-page-node-id="j8Dy5Xyu9xQTo5fxW8gu2T">
+  ⚠️ 合规提示：本工具处理<strong>你提供的公开岗位数据（CSV / 示例）</strong>，也支持<strong>用你自己的 BOSS 账号一键拉取公开岗位</strong>；不抓取任何手机号 / 微信 / 简历等隐私信息，AI 提取在本地大模型完成、数据不出本机。请仅用于个人学习。
+</div>
+
+<div class="wrap" data-page-node-id="nTPbo2KI3wxJkFk4iJ6mCL">
+  <div class="toolbar" data-page-node-id="TEzEP6rGggprZc4bNpu2A4">
+    <button id="btnSample" data-page-node-id="CSoK4eCwf942HFoWYDXFf1">加载示例数据</button>
+    <button id="btnUpload" class="ghost" data-page-node-id="gmGcBXmxXPN6sGAHdZ1iUz">上传 CSV</button>
+    <input type="file" id="fileInput" accept=".csv" style="display:none" data-page-node-id="WIdcsWBsNVDyy0pKlAudrs">
+    <button id="btnAI" class="ghost" data-page-node-id="SIoHP4HDPUdGKPVJ9XjeDx">用 AI 提取技能</button>
+    <button id="btnDownload" class="ghost" data-page-node-id="Ye9RSLhqMqeSBGahdtHOlL">下载清洗后 CSV</button>
+    <span class="spacer" data-page-node-id="KpQxrbYD4Gg23baeTPnABS"></span>
+    <span id="msg" data-page-node-id="H73gCpHqwiWDd8ZJCLe0bM"></span>
+  </div>
+
+  <div class="panel" id="fetchPanel" data-page-node-id="fetchPanel">
+    <h3 data-page-node-id="fetchPanelH">🔄 实时拉取 BOSS 岗位（首次需登录一次）</h3>
+    <div class="filters" data-page-node-id="fetchFilters">
+      <div class="field" data-page-node-id="fk1">
+        <label data-page-node-id="fk1l">关键词</label>
+        <input type="text" id="fKw2" placeholder="如 Python / 数据分析" data-page-node-id="fk1i">
+      </div>
+      <div class="field" data-page-node-id="fk2">
+        <label data-page-node-id="fk2l">城市</label>
+        <input type="text" id="fCity2" placeholder="如 深圳（留空=全国）" data-page-node-id="fk2i">
+      </div>
+      <div class="field" data-page-node-id="fk3">
+        <label data-page-node-id="fk3l">翻页次数</label>
+        <input type="number" id="fPages" value="3" min="1" max="12" data-page-node-id="fk3i">
+      </div>
+      <div class="field" data-page-node-id="fk3b">
+        <label data-page-node-id="fk3bl">抓详情数（HR活跃度/JD，慢）</label>
+        <input type="number" id="fDetails" value="0" min="0" max="60" data-page-node-id="fk3bi">
+      </div>
+      <div class="field" data-page-node-id="fk4">
+        <label data-page-node-id="fk4l">&nbsp;</label>
+        <button id="btnFetch" data-page-node-id="btnFetch">拉取并筛选</button>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#8a5a00;margin-top:8px" data-page-node-id="fetchNote">
+      首次使用请先双击 <b>start.bat</b>（启动「BOSS 专用 Chrome」并登录一次，登录态会保存）。<br>
+      「抓详情数」默认 <b>0 = 不抓详情</b>（最快）；设成 10~20 才会打开详情页——只有详情页才有细粒度 HR 活跃度（「刚刚活跃」）和完整 JD，但每条约 10-25 秒。拉取时请保持专用 Chrome 开着。
+    </div>
+  </div>
+
+  <div class="stats" id="stats" data-page-node-id="oOSxBRpzfUbOvISONL3JBy">尚未加载数据。点击「加载示例数据」或「上传 CSV」开始。</div>
+
+  <div class="panel" data-page-node-id="fcpOCzHenzSCEDFpfaCsab">
+    <h3 data-page-node-id="rlpYueW4SL9pS2yn3P00EU">筛选条件</h3>
+    <div class="filters" data-page-node-id="8FHW95lVC8gUgw4FWGDMLf">
+      <div class="field" data-page-node-id="UeT1A9K1kAWYFrVG4Wu8mp">
+        <label data-page-node-id="Yuf0SoQKtWOKkEQAqxoQ59">城市</label>
+        <select id="fCity" data-page-node-id="bj3Zfj6R5sIGPLsEg9xgji"><option value="全部" data-page-node-id="rjn0Q0j9kSWVJZLc4aZINF">全部</option></select>
+      </div>
+      <div class="field" data-page-node-id="CZhNPPkq6LGZXf7XYLnWyc">
+        <label data-page-node-id="TSE0h29ztgTjxeNYfIR8BV">最低月薪（元/月）</label>
+        <input type="number" id="fMin" placeholder="不限" step="1000" min="0" data-page-node-id="HpSeEAgM0sA6N9cNL9GGAl">
+      </div>
+      <div class="field" data-page-node-id="KuIzsBoXvdVfcYzlsBtALk">
+        <label data-page-node-id="EF4RkNGHO6zlwXrb3sbxrT">关键词（岗位/描述）</label>
+        <input type="text" id="fKw" placeholder="如 爬虫 / 实习" data-page-node-id="fAFJj8tP8IeSk1DR7vil6n">
+      </div>
+      <div class="field" data-page-node-id="hrField">
+        <label data-page-node-id="hrLabel">HR 活跃度（多久内活跃/回复）</label>
+        <select id="fHr" data-page-node-id="fHr">
+          <option value="">全部</option>
+          <option value="1">今日活跃</option>
+          <option value="3">3日内活跃</option>
+          <option value="7">本周活跃</option>
+          <option value="30">本月活跃</option>
+        </select>
+      </div>
+      <div class="field" data-page-node-id="3T2sO9Km656lJLmBJ68Hry">
+        <label data-page-node-id="HRA0HppHCrwUdyvUOwwRmD">&nbsp;</label>
+        <div class="checks" data-page-node-id="PhqV0KM0gOONrVqBWKGBIa">
+          <label data-page-node-id="7fT3bsG2PWSs74WOHUMIZv"><input type="checkbox" id="fDup" data-page-node-id="1IWUEQRa6tvpA9SsyVHfqD"> 排除重复</label>
+          <label data-page-node-id="0ocsdy38b5vf89XchUqGnn"><input type="checkbox" id="fComplete" data-page-node-id="UKJPcbSjBPBa2v2sQt4ufi"> 仅完整记录</label>
+        </div>
+      </div>
+      <div class="field" style="flex-basis:100%" data-page-node-id="bHrgXhzkWWvPUqyhaYCFaM">
+        <label data-page-node-id="DsWAFKJqY9oLEHGlGZImmW">技能要求（需同时包含以下全部，留空=不限）</label>
+        <div class="checks" id="skillBoxes" data-page-node-id="qINrucl8Dj1l7mrOCzwDBI"><span style="color:#9aa4b5" data-page-node-id="O09HCnPYedrilRHHwGY08J">加载数据后自动生成</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="padding:0; overflow:auto;" data-page-node-id="NoUUN5gnw93Y8kTHcU3bjO">
+    <table id="tbl" data-page-node-id="Qd3LhaCOEnEoLxcEQvJAgb">
+      <thead data-page-node-id="2X0XZcqCvvKYNemUXANbkq">
+        <tr data-page-node-id="Xuj8tb0CWoaUk3nmeDUm0J">
+          <th data-page-node-id="ajFwoGqWFpcGODqBrh85Qy">公司</th><th data-page-node-id="lfSG1xR29P5ZHomhALsdDv">岗位</th><th data-page-node-id="YgTd6bUQAUAWSF1s1iqgdz">城市</th><th data-page-node-id="vhZyaFwVNefDQ4JyvOA86T">薪资(原)</th>
+          <th data-page-node-id="idFuhDcosgq25BTCiBaKKO">月薪区间(元)</th><th data-page-node-id="pw6UohXWvtMjC2qccByUhU">经验</th><th data-page-node-id="xO81o2GK73UXxOTpVYainA">学历</th><th data-page-node-id="hrTh">HR活跃</th><th data-page-node-id="ftSihdvo7tDGTofuoehe8s">技能要求</th><th data-page-node-id="GY8gDIqWHODKnfafyhoGuy">链接</th>
+        </tr>
+      </thead>
+      <tbody id="tbody" data-page-node-id="PfRwQvJikzbSviOlS4rL7I">
+        <tr data-page-node-id="W8aAs3yycoIV4NygJAMcUm"><td colspan="10" class="empty" data-page-node-id="xjuowyl6io7UHYurHdwzNJ">暂无数据</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+let ALL = [];          // 清洗后的全部行
+let FILTERED = [];     // 当前筛选结果
+let SKILLS = [];       // 全部出现的技能
+let ALL_SKILLS_SET = new Set();
+
+const $ = id => document.getElementById(id);
+const msg = t => { $("msg").textContent = t || ""; };
+
+function num(v){ return (v===null||v===undefined||v==="") ? "" : v; }
+
+async function loadSample(){
+  msg("加载示例中…");
+  try {
+    const r = await fetch("/api/sample");
+    const d = await r.json();
+    cleanAndStore(d.csv);
+  } catch(e){ msg("加载失败：" + e); }
+}
+
+async function uploadFile(file){
+  const text = await file.text();
+  cleanAndStore(text, file.name);
+}
+
+async function cleanAndStore(csvText, name){
+  msg("清洗中…");
+  const r = await fetch("/api/clean", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({csv: csvText})
+  });
+  const d = await r.json();
+  if (d.error){ msg(d.error); return; }
+  ALL = d.rows;
+  renderCityOptions(d.stats.cities);
+  buildSkillBoxes();
+  applyFilter();
+  const s = d.stats;
+  $("stats").innerHTML = `已加载 <b>${s.total}</b> 条 · 重复 <b>${s.duplicates}</b> 条 · `
+    + `缺失关键信息 <b>${s.missing_key}</b> 条 · 有薪资 <b>${s.with_salary}</b> 条 · `
+    + `HR活跃 <b>${s.active_hr||0}</b> 条`
+    + (name?` · 来源：${name}`:``);
+  msg("");
+}
+
+function renderCityOptions(cities){
+  const sel = $("fCity");
+  sel.innerHTML = '<option value="全部">全部</option>' + (cities||[]).map(c=>`<option>${c}</option>`).join("");
+}
+
+function buildSkillBoxes(){
+  ALL_SKILLS_SET = new Set();
+  ALL.forEach(r => (r.技能||[]).forEach(s => ALL_SKILLS_SET.add(s)));
+  SKILLS = Array.from(ALL_SKILLS_SET).sort();
+  const box = $("skillBoxes");
+  if (!SKILLS.length){ box.innerHTML = '<span style="color:#9aa4b5">暂无技能标签</span>'; return; }
+  box.innerHTML = SKILLS.map(s=>`<label><input type="checkbox" class="sk" value="${s}"> ${s}</label>`).join("");
+}
+
+function selectedSkills(){
+  return Array.from(document.querySelectorAll(".sk:checked")).map(c=>c.value);
+}
+
+function applyFilter(){
+  const city = $("fCity").value;
+  const min = parseFloat($("fMin").value);
+  const kw = $("fKw").value.trim();
+  const dup = $("fDup").checked;
+  const complete = $("fComplete").checked;
+  const skills = selectedSkills();
+  const hr = parseInt($("fHr").value) || 0;
+
+  FILTERED = ALL.filter(r => {
+    if (city !== "全部" && r.城市_norm !== city) return false;
+    if (hr) { const d = r.HR活跃天数; if (d == null || d > hr) return false; }
+    if (!isNaN(min)) {
+      const mx = r.薪资上限, mn = r.薪资下限;
+      if (!((mx!=null && mx>=min) || (mn!=null && mn>=min))) return false;
+    }
+    if (dup && r.重复) return false;
+    if (complete && r.缺失关键信息) return false;
+    if (skills.length){
+      const set = new Set(r.技能||[]);
+      if (!skills.every(s=>set.has(s))) return false;
+    }
+    if (kw){
+      const hay = (r.岗位描述||"") + " " + (r.岗位名称||"");
+      if (hay.toLowerCase().indexOf(kw.toLowerCase()) < 0) return false;
+    }
+    return true;
+  });
+  renderTable(FILTERED);
+}
+
+function hrCell(r){
+  const t = r.HR活跃 || "";
+  if (!t) return "<span style='color:#9aa4b5'>未知</span>";
+  const d = r.HR活跃天数;
+  const color = (d==null||d>=999) ? "#9aa4b5" : (d<=7 ? "#1a7f37" : "#b42318");
+  return `<span style="color:${color}">${t}</span>`;
+}
+
+function renderTable(rows){
+  const tb = $("tbody");
+  if (!rows.length){ tb.innerHTML = '<tr><td colspan="10" class="empty">没有符合条件的岗位</td></tr>'; return; }
+  tb.innerHTML = rows.map(r => {
+    const salary = (r.薪资下限!=null && r.薪资上限!=null)
+      ? `<span class="sal-ok">${r.薪资下限} - ${r.薪资上限}</span>`
+      : (r.薪资? `<span class="sal-no">${r.薪资}</span>` : `<span class="sal-no">无</span>`);
+    const skills = (r.技能||[]).map(s=>`<span class="pill">${s}</span>`).join("");
+    const cls = (r.重复?"row-dup ":"") + (r.缺失关键信息?"row-miss":"");
+    const link = r.招聘链接 ? `<a href="${r.招聘链接}" target="_blank">查看</a>` : "";
+    return `<tr class="${cls.trim()}">
+      <td>${r.公司名称||"<i>缺失</i>"}</td>
+      <td>${r.岗位名称||"<i>缺失</i>"}</td>
+      <td>${r.城市_norm||r.城市||""}</td>
+      <td>${r.薪资||""}</td>
+      <td>${salary}</td>
+      <td>${r.经验||""}</td>
+      <td>${r.学历||""}</td>
+      <td>${hrCell(r)}</td>
+      <td>${skills||"<span style='color:#9aa4b5'>—</span>"}</td>
+      <td class="link">${link}</td>
+    </tr>`;
+  }).join("");
+}
+
+async function aiExtract(){
+  if (!ALL.length){ msg("请先加载数据"); return; }
+  const btn = $("btnAI"); btn.disabled = true; msg("调用本地大模型提取技能中（可能需要几十秒）…");
+  try {
+    const r = await fetch("/api/extract", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({rows: ALL, limit: 40})
+    });
+    const d = await r.json();
+    if (d.error){ msg(d.error); return; }
+    ALL = d.rows;
+    buildSkillBoxes();
+    applyFilter();
+    msg(`AI 已为 ${d.extracted} 条岗位提取技能（模型 ${d.ollama||""}）`);
+  } catch(e){ msg("提取失败：" + e); }
+  finally { btn.disabled = false; }
+}
+
+function downloadCSV(){
+  if (!FILTERED.length){ msg("没有可导出的数据"); return; }
+  const cols = ["公司名称","岗位名称","城市_norm","薪资","薪资下限","薪资上限","经验","学历","HR活跃","HR活跃天数","技能","招聘链接","重复","缺失关键信息"];
+  const esc = v => {
+    if (v==null) v="";
+    v = (Array.isArray(v)? v.join("、"): String(v));
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+  };
+  const lines = [cols.join(",")];
+  FILTERED.forEach(r=> lines.push(cols.map(c=>esc(r[c])).join(",")));
+  const blob = new Blob(["\ufeff"+lines.join("\n")], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "boss_cleaned.csv";
+  a.click();
+  msg("已导出 " + FILTERED.length + " 条到 boss_cleaned.csv");
+}
+
+$("btnSample").onclick = loadSample;
+
+async function fetchLive(){
+  const btn = $("btnFetch"); btn.disabled = true;
+  const dcount = parseInt($("fDetails").value) || 0;
+  msg("正在从 BOSS 实时拉取" + (dcount > 0 ? "（含 " + dcount + " 条详情，较慢，请耐心等几分钟）" : "") + "…");
+  try {
+    const r = await fetch("/api/fetch", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        keyword: $("fKw2").value.trim(),
+        city: $("fCity2").value.trim(),
+        pages: parseInt($("fPages").value) || 3,
+        details: dcount
+      })
+    });
+    const d = await r.json();
+    if (d.error){ msg(d.error); return; }
+    ALL = d.rows;
+    renderCityOptions(d.stats.cities);
+    buildSkillBoxes();
+    applyFilter();
+    const s = d.stats;
+    $("stats").innerHTML = `实时拉取 <b>${d.fetched}</b> 条 · 清洗后 <b>${s.total}</b> 条 · `
+      + `重复 <b>${s.duplicates}</b> · 缺失 <b>${s.missing_key}</b> · HR活跃 <b>${s.active_hr||0}</b>`;
+    msg("");
+  } catch(e){ msg("拉取失败：" + e); }
+  finally { btn.disabled = false; }
+}
+$("btnFetch").onclick = fetchLive;
+$("btnUpload").onclick = () => $("fileInput").click();
+$("fileInput").onchange = e => { if (e.target.files[0]) uploadFile(e.target.files[0]); };
+$("btnAI").onclick = aiExtract;
+$("btnDownload").onclick = downloadCSV;
+["fCity","fMin","fKw","fHr","fDup","fComplete"].forEach(id=>{
+  $(id).addEventListener("input", applyFilter);
+  $(id).addEventListener("change", applyFilter);
+});
+$("skillBoxes").addEventListener("change", applyFilter);
+
+// 启动时自动加载示例
+loadSample();
+</script>
+</body>
+</html>

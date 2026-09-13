@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="oYOSUKAeN2mEKnFk94hbkq">
+<head data-page-node-id="udBgn0Ap6s9PCnBD3OLr7H">
+<meta charset="utf-8" data-page-node-id="ReVpIKR836Ah05al93FbE8">
+<title>BOSS 岗位一键导出</title>
+<style>
+  body{font-family:"Microsoft YaHei",sans-serif;max-width:800px;margin:36px auto;padding:0 22px;line-height:1.75;color:#1f2329;font-size:15px}
+  h2{margin:0 0 6px}
+  .box{background:#f5f8ff;border:1px solid #cfe0ff;border-radius:10px;padding:16px 20px;margin:16px 0}
+  .box h3{margin:0 0 8px;font-size:15px;color:#2a3346}
+  a.bm{display:inline-block;background:#2b6cff;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:600}
+  code{background:#eef1f6;padding:2px 6px;border-radius:4px}
+  textarea{width:100%;height:60px;font-size:12px;color:#5b6b85;border:1px solid #d4dae6;border-radius:6px;padding:6px}
+  .warn{color:#8a5a00;font-size:13.5px}
+</style>
+</head>
+<body data-page-node-id="GeuMLSmDy2CYqFGJ4djyb3">
+
+<h2 data-page-node-id="BKmy9BATx1kq8mKF2M29V7">BOSS 岗位一键导出</h2>
+<p data-page-node-id="cUCCqGPFEhgVXMlgSk9Z1p">BOSS 会拦截「另开的自动化浏览器」。所以这里改成<strong data-page-node-id="d0FSGD1dzY8i5G2ErtuaxK">在你自己的 Chrome 里跑</strong>：你登录、搜好岗位 → 点一下书签 → 它自动往下滚、把所有岗位加载出来 → 直接导出 CSV → 丢进工具清洗筛选。全程没有自动化浏览器，BOSS 不拦。</p>
+
+<div class="box" data-page-node-id="xhHaG4RDZMRhcDpINV55dp">
+  <h3 data-page-node-id="c1KDPDlT1lNPDheCmzZ0rp">第 1 步：把下面的按钮拖到书签栏</h3>
+  <p data-page-node-id="46uCB6HMJKdLLhtFGdAPa1">先按 <code data-page-node-id="UWiRC8BcD07mIGmtf09ge5">Ctrl + Shift + B</code> 显示书签栏，然后<strong data-page-node-id="Ge7xmL31QoC63I17Dlc1iE">用鼠标把下面这个蓝色按钮拖到书签栏上</strong>，松手即可。</p>
+  <p data-page-node-id="Sa1KEHwC2MXhRdU4CHj4VS"><a id="bm" class="bm" href="#" data-page-node-id="8kd6SmOH2RJnnBLnxQR2Tr">📥 BOSS岗位导出（自动翻页）</a></p>
+  <p class="warn" data-page-node-id="QKFKm4spGR3MMazbMGn6wD">拖不动？右键书签栏 →「添加网页 / 添加书签」→ 名称随便填 → 网址粘贴下面这行 → 保存。</p>
+  <textarea id="bmtext" readonly></textarea>
+</div>
+
+<div class="box" data-page-node-id="WoBmvcDUNoiAQRmp1Lo2LQ">
+  <h3 data-page-node-id="ZPgCHhuYMGH3tVkWpnSC7b">第 2 步：去 BOSS 搜岗位</h3>
+  <p data-page-node-id="wheBQlhPa59BU9627NjVUI">在你自己的 Chrome 里正常打开 BOSS 直聘，搜索目标岗位（如「Python 深圳」），等职位列表出来。</p>
+</div>
+
+<div class="box" data-page-node-id="4uB66nw6Nc31UgB4NthdAb">
+  <h3 data-page-node-id="SHbiRUJt2mMHdNKuSe0wlZ">第 3 步：点一下书签栏的「📥 BOSS岗位导出」</h3>
+  <p data-page-node-id="Ne2JKXO5vq3xMUT0bWSE7V">右下角会出现一个小蓝条，显示「正在加载岗位… 已收集 N 条」。它会<strong data-page-node-id="Rzud6gjsWj9qdgSGE1BrlK">自动往下滚、一直加载到没有新岗位为止</strong>（岗位多就久一点，期间别动页面）。</p>
+  <p data-page-node-id="R3V2EIvDiUI7bXGcbYJvGn">结束后自动下载 <code data-page-node-id="QMQr9Cq4XpvOHvi42IxlBO">boss_数字.csv</code>（含 公司/岗位/城市/薪资/经验/学历/描述/链接/HR活跃）。</p>
+</div>
+
+<div class="box" data-page-node-id="kaI09at0WElAjh77Za9N7N">
+  <h3 data-page-node-id="ZSr02SIC6AExuucVhDc2lK">第 4 步：导入工具</h3>
+  <p data-page-node-id="KspPqwCw4jAvyAE5B64z3F">打开工具页 <code data-page-node-id="hfHpS7DGWdr9r51opn1VnT">http://localhost:8090</code> → 点「上传 CSV」→ 选刚下载的文件 → 清洗 + 按 城市/薪资/技能/HR活跃度 筛选。</p>
+</div>
+
+<script>
+async function bossExport() {
+  function cards() { return document.querySelectorAll('.job-card-wrapper'); }
+  if (!cards().length) { alert('没找到岗位卡片，请确认当前是 BOSS 的职位列表页。'); return; }
+
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;z-index:2147483647;right:18px;bottom:18px;background:#2b6cff;color:#fff;padding:12px 18px;border-radius:10px;font:14px/1.6 "Microsoft YaHei",sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25)';
+  bar.textContent = '正在加载岗位…';
+  document.body.appendChild(bar);
+
+  var map = {};
+  function t(el, sel) { var e = el.querySelector(sel); return e ? e.innerText.trim() : ''; }
+
+  function grab() {
+    var cs = cards();
+    for (var i = 0; i < cs.length; i++) {
+      var c = cs[i];
+      var a = c.querySelector('a');
+      var link = a ? (a.href || '') : '';
+      var nm = '';
+      var n = c.querySelector('.job-name');
+      if (n) { var sp = n.querySelector('span'); nm = (sp ? sp.innerText : n.innerText).trim(); }
+      var exp = '', edu = '';
+      var tags = c.querySelectorAll('.tag-list span');
+      for (var j = 0; j < tags.length; j++) {
+        var x = tags[j].innerText.trim();
+        if (/年|经验|应届|在校/.test(x)) { exp = x; }
+        else if (/本科|硕士|博士|大专|学历|中专/.test(x)) { edu = x; }
+      }
+      var txt = c.innerText || '';
+      var m = txt.match(/((?:刚刚|今日|本周|本月|半年前|三日内|3日内|一周内|7日内|\d+\s*日内|\d+\s*月内)\s*(?:活跃|回复|在线))/);
+      var hr = m ? m[1].replace(/\s/g, '') : '';
+      var key = link || (t(c, '.company-name') + '|' + nm + '|' + t(c, '.salary'));
+      if (!map[key]) {
+        map[key] = [
+          t(c, '.company-name'), nm, t(c, '.job-area'), t(c, '.salary'), exp, edu,
+          (t(c, '.info-desc') || t(c, '.job-card-desc')).replace(/\n/g, ' '), link, hr
+        ];
+      }
+    }
+  }
+
+  var same = 0;
+  for (var round = 0; round < 60; round++) {
+    grab();
+    var n1 = Object.keys(map).length;
+    bar.textContent = '正在加载岗位… 已收集 ' + n1 + ' 条';
+    try {
+      var bs = document.querySelectorAll('a,button');
+      for (var b = 0; b < bs.length; b++) {
+        var bt = (bs[b].innerText || '').trim();
+        if ((bt === '加载更多' || bt === '查看更多' || bt === '下一页') && bs[b].offsetParent) {
+          bs[b].click(); break;
+        }
+      }
+    } catch (e) {}
+    window.scrollTo(0, document.body.scrollHeight);
+    await new Promise(function (r) { setTimeout(r, 1400); });
+    var n2 = Object.keys(map).length;
+    if (n2 === n1) { same++; if (same >= 3) { break; } } else { same = 0; }
+  }
+  grab();
+
+  var rows = [['公司名称', '岗位名称', '城市', '薪资', '经验', '学历', '岗位描述', '招聘链接', 'HR活跃']];
+  Object.keys(map).forEach(function (k) { rows.push(map[k]); });
+  var csv = rows.map(function (r) {
+    return r.map(function (v) {
+      v = (v == null ? '' : '' + v);
+      return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+    }).join(',');
+  }).join('\n');
+  var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+  var a2 = document.createElement('a');
+  a2.href = URL.createObjectURL(blob);
+  a2.download = 'boss_' + Date.now() + '.csv';
+  a2.click();
+  bar.textContent = '已导出 ' + (rows.length - 1) + ' 条 ✅ 去工具页导入吧';
+  setTimeout(function () { bar.remove(); }, 5000);
+}
+var code = 'javascript:(' + bossExport.toString() + ')();';
+document.getElementById('bm').setAttribute('href', code);
+document.getElementById('bmtext').value = code;
+</script>
+</body>
+</html>

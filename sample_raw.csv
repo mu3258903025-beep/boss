@@ -1,0 +1,73 @@
+﻿公司名称,岗位名称,城市,薪资,经验,学历,岗位描述,招聘链接
+唯普汽车科技,数据采集实习生,广州·天河区,150-200元/天,在校/应届,本科,"1、本科在读，每周到岗4天以上
+2、熟悉 Python，会 requests / BeautifulSoup 爬取网页
+3、了解正则表达式，能处理脏数据
+4、有 SQL 基础优先，会用 pandas 加分",https://www.zhipin.com/job/1001
+数云数据,Python爬虫工程师,深圳·南山区,15-20K·13薪,1-3年,本科,"负责公司数据采集平台建设，使用 Python + Scrapy 编写爬虫
+熟悉 Selenium / Playwright 处理动态页面
+熟练使用 pandas 做数据清洗
+有 MySQL / SQL 经验，了解 Linux",https://www.zhipin.com/job/1002
+数云数据,Python爬虫工程师,深圳·南山区,15-20K·13薪,1-3年,本科,"负责公司数据采集平台建设，使用 Python + Scrapy 编写爬虫
+熟悉 Selenium / Playwright 处理动态页面
+熟练使用 pandas 做数据清洗
+有 MySQL / SQL 经验，了解 Linux",https://www.zhipin.com/job/1002
+智链信息,数据分析师,北京·海淀区,20-30K,3-5年,本科,"负责业务数据分析，输出分析报告
+熟练使用 SQL 进行数据提取
+掌握 Python / pandas 数据分析
+熟练使用 Excel、Tableau 等可视化工具",https://www.zhipin.com/job/1003
+云图科技,数据采集工程师,上海·浦东新区,12-18K,1-3年,本科,"搭建爬虫系统采集公开数据
+精通 Python，熟悉 requests、BeautifulSoup
+会用正则表达式提取文本
+了解 Scrapy 框架",https://www.zhipin.com/job/1004
+启明软件,大数据开发,杭州·西湖区,25-40K,3-5年,本科,"使用 Hadoop / Spark 处理海量数据
+熟悉 SQL 与 Linux 环境
+Python 脚本编写能力
+有数据仓库建设经验",https://www.zhipin.com/job/1005
+广信网络,爬虫开发,广州,10-15K,1-3年,大专,"编写网页爬虫采集数据
+熟悉 Python、requests
+了解 BeautifulSoup 解析
+会基础 SQL",https://www.zhipin.com/job/1006
+远见咨询,数据运营,深圳,面议,1-3年,本科,"负责运营数据监控与报表
+熟练 Excel，会 SQL 取数
+了解 Python 数据分析优先",https://www.zhipin.com/job/1007
+数云数据,Python爬虫工程师,深圳·南山区,15-20K·13薪,1-3年,本科,"负责公司数据采集平台建设，使用 Python + Scrapy 编写爬虫
+熟悉 Selenium / Playwright 处理动态页面
+熟练使用 pandas 做数据清洗
+有 MySQL / SQL 经验，了解 Linux",https://www.zhipin.com/job/1002
+恒通科技,数据清洗专员,北京,8-12K,应届/1年,本科,"对采集回来的脏数据做清洗整理
+熟练使用 Excel 与 pandas
+会用 Python 处理数据
+细心，懂基本 SQL",https://www.zhipin.com/job/1008
+微岚信息,高级数据分析师,上海,30-50K,5-10年,硕士,"带领数据分析团队
+精通 SQL、Python、pandas
+熟练 Tableau 可视化
+有机器学习经验优先",https://www.zhipin.com/job/1009
+,兼职数据标注,成都,,在校/应届,不限,"简单的数据标注与整理工作
+会使用 Excel
+时间灵活",https://www.zhipin.com/job/1010
+星河数据,爬虫工程师,杭州,18-25K,3-5年,本科,"维护公司分布式爬虫
+精通 Python、Scrapy、Redis
+熟悉反爬对抗
+了解 Linux 与 Docker",https://www.zhipin.com/job/1011
+云图科技,数据采集工程师,上海·浦东新区,12-18K,1-3年,本科,"搭建爬虫系统采集公开数据
+精通 Python，熟悉 requests、BeautifulSoup
+会用正则表达式提取文本
+了解 Scrapy 框架",https://www.zhipin.com/job/1004
+极速信息,Python开发,广州·番禺区,9-14K,1-3年,本科,"参与后端数据接口开发
+熟悉 Python、Flask
+会用 SQL 操作数据库
+了解爬虫与数据采集",https://www.zhipin.com/job/1012
+天睿智能,大数据工程师,远程,20-35K,3-5年,本科,"远程办公，负责数据 pipeline 建设
+精通 Python、Spark、SQL
+熟悉 AWS / 云上数据处理
+良好的英文文档能力",https://www.zhipin.com/job/1013
+博闻传媒,数据分析实习生,北京·朝阳区,200-260元/天,在校/应届,本科,"协助分析师做数据处理
+会 Excel、SQL 基础
+了解 Python / pandas 加分",https://www.zhipin.com/job/1014
+联创电子,数据采集实习生,深圳·宝安区,140-180元/天,在校/应届,大专,"采集公开电子产品数据
+熟悉 Python 优先
+会基本 Excel",https://www.zhipin.com/job/1015
+数云数据,Python爬虫工程师,深圳·南山区,15-20K·13薪,1-3年,本科,"负责公司数据采集平台建设，使用 Python + Scrapy 编写爬虫
+熟悉 Selenium / Playwright 处理动态页面
+熟练使用 pandas 做数据清洗
+有 MySQL / SQL 经验，了解 Linux",https://www.zhipin.com/job/1002

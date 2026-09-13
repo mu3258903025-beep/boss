@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# ---- 采集产物 / 登录态（禁止提交！含个人账号信息）----
+boss_scraper/chrome-profile/
+boss_scraper/job-result/
+browser_profile/
+pw-browsers/
+data/latest.csv
+data/_debug.png
+data/_debug.html
+
+# ---- 导出结果 ----
+boss_cleaned.csv
+
+# ---- 临时调试文件（本项目以 _ 开头）----
+_*
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
